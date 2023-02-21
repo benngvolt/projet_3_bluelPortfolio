@@ -5,30 +5,31 @@
 /* DEFINITION DES ELEMENTS du formulaires ainsi que leurs ELEMENTS PARENTS en communiquant avec le DOM*/
 
 /* partie du formulaire relative à l'EMAIL */
-const emailForm = document.querySelector(".emailForm");
+/*const emailForm = document.querySelector(".emailForm");*/
 
 const emailField = document.querySelector(".emailField");
-emailForm.appendChild(emailField);
+/*emailForm.appendChild(emailField);*/
 
 /* partie du formulaire relative au MOT DE PASSE */
-const passwordForm = document.querySelector(".passwordForm");
+/*const passwordForm = document.querySelector(".passwordForm");*/
 
 const passwordField = document.querySelector(".passwordField");
-passwordForm.appendChild(passwordField);
+/*passwordForm.appendChild(passwordField);*/
 
 /* partie du formulaire relative aux BOUTONS (bouton d'envoi + oubli mot-de-passe) */
 const buttonForm = document.querySelector(".buttonForm");
 
-const submitButton = document.querySelector(".submitButton");
-buttonForm.appendChild(submitButton);
+const loginForm = document.querySelector(".loginForm");
+/*buttonForm.appendChild(loginForm);*/
 
 /* CREATION D'UN EVENEMENT D'ENVOI DU FORMULAIRE lié à l'élément 'submitButton', 
 et exécution d'une requête POST via l'API pour vérification identification------
 ------------------------------------------------------------------------------*/
 
-submitButton.addEventListener ("click", async function(event){
+loginForm.addEventListener ("submit", async function(event){
     /* empêchement du navigateur de recharger la page par défault */
     event.preventDefault();
+    console.log("coucou")
     /* stockage des valeurs email et password entrées en input dans le champs de saisie, dans des variables email et password*/
     let email = emailField.value;
     let password = passwordField.value;
