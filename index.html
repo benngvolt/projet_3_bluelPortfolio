@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Sophie Bluel - Architecte d'intérieur</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://kit.fontawesome.com/d34b6ac5c7.js" crossorigin="anonymous"></script>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
@@ -18,8 +19,11 @@
 		<ul>
 			<li><a href="index.html">projets</a></li>
 			<li>contact</li>
-			<li><a href="login.html">login</a></li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+			<!-- CREATION D'UN LIEN VERS LA PAGE DE CONNEXION : -->
+			<li class="loginLink"><a href="login.html">login</a></li>
+			<!-- CREATION D'UN BOUTON DE DÉCONNEXION : -->
+			<li class="logoutButton">logout</li>
+			<li><a href="http://instagram.com"><img src="./assets/icons/instagram.png" alt="Instagram"></a></li>
 		</ul>
 	</nav>
 </header>
@@ -27,6 +31,9 @@
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
+
+			<!-- CRÉATION D'UN BOUTON DE MODIFICAION DE LA PHOTO DE PROFILE (en CSS 'display: none' par défault)-->
+			<a class="modifProfile" href=""><p><i class="modifIcon fa-regular fa-pen-to-square"></i>Modifier</p></a>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -36,55 +43,43 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<ul  class="filters">
-			<li class="allCategories"></li>
+		<div class="titleContainer">
+			<h2>Mes Projets</h2>
+
+			<!-- CRÉATION D'UN BOUTON DE MODIFICAION DES TRAVAUX (en CSS 'display: none' par défault)-->
+			<a class="modifWork" href="#modaleWork"><p><i class="modifIcon fa-regular fa-pen-to-square"></i>Modifier</p></a>
+		</div>
+
+
+
+		<!-- MODALE POUR MODIFIER LES TRAVAUX ICI------------------------------------------------------------------- -->
+
+		<!-- <aside id="modaleWork" class="modale" role="dialog">
+			<div class="modaleWrapper">
+				<h1>Galerie photo</h1>
+				<ul class="galeryContainer">
+					<li>
+					</li>
+				</ul>
+				<button>Ajouter une photo</button>
+				<button>Supprimer la galerie</button>
+			</div>
+		</aside> -->
+
+		<!-- END __ MODALE POUR MODIFIER LES TRAVAUX ICI----------------------------------------------------------- -->
+
+
+
+		<!-- CRÉATION D'UNE BARRE DE BOUTONS DE FILTRES 'CATEGORIES DE TRAVAUX' (en CSS 'display: none' en mode logIn):-->
+		<ul class="filters">
+			<!-- Création d'un filtre "tous" inconditionnellement présent, quel que soit le nombre de catégories -->
+			<li class="allCategories categoryGen">Tous</li>
+			<!-- Reste des filtres de catégories générées par le Javascript via l'API, fonction des catégories existentes-->
 		</ul>
-		<div class="gallery">
-			<!-- <figure>
-				<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
-				<figcaption>Abajour Tahina</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-v.png" alt="Appartement Paris V">
-				<figcaption>Appartement Paris V</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/restaurant-sushisen-londres.png" alt="Restaurant Sushisen - Londres">
-				<figcaption>Restaurant Sushisen - Londres</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/la-balisiere.png" alt="Villa “La Balisiere” - Port Louis">
-				<figcaption>Villa “La Balisiere” - Port Louis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/structures-thermopolis.png" alt="Structures Thermopolis">
-				<figcaption>Structures Thermopolis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-x.png" alt="Appartement Paris X">
-				<figcaption>Appartement Paris X</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/le-coteau-cassis.png" alt="Pavillon “Le coteau” - Cassis">
-				<figcaption>Pavillon “Le coteau” - Cassis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/villa-ferneze.png" alt="Villa Ferneze - Isola d’Elba">
-				<figcaption>Villa Ferneze - Isola d’Elba</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-xviii.png" alt="Appartement Paris XVIII">
-				<figcaption>Appartement Paris XVIII</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/bar-lullaby-paris.png" alt="Bar “Lullaby” - Paris">
-				<figcaption>Bar “Lullaby” - Paris</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/hotel-first-arte-new-delhi.png" alt="Hotel First Arte - New Delhi">
-				<figcaption>Hotel First Arte - New Delhi</figcaption>
-			</figure> -->
+
+		<!-- CRÉATION DE LA GRILLE DE TRAVAUX générés par le Javascript via l'API, fonction des travaux existants:-->
+		<div class="gallery">	
+			<!-- /.../ -->
 		</div>
 	</section>
 	<section id="contact">

@@ -18,7 +18,8 @@
             <ul>
                 <li><a href="index.html">projets</a></li>
                 <li>contact</li>
-                <li class="bold">login</li>
+                <li class="bold loginLink">login</li>
+			    <li class="logoutButton">logout</li>
                 <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
             </ul>
         </nav>
@@ -26,19 +27,27 @@
     <main>
         <section>
             <h2 class="loginTitle">Log In</h2>
+
+            <!-- CREATION D'UN FORMULAIRE DE CONNEXION AVEC EMAIL et MOT-DE-PASSE, avec la méthode POST-->
             <form method="post" action="#" class="loginForm">
 
-                <!---champs E-mail--->
-                <label for="email" class="emailLabel">E-mail</label>
-                <input type="email" name="email" id="email" value="" class="emailField">
+                <!--Création d'un sous-formulaire "e-mail"-->
+                <div class="emailForm">
+                    <label for="email" class="emailLabel">E-mail</label>
+                    <input type="email" name="email" id="email" value="" class="emailField">
+                </div>
 
-                <!---champs Mot de passe--->      
-                <label for="password" class="passwordLabel">Mot de passe</label>
-                <input type="password" name="password" id="password" value="" class="passwordField">
+                <!--Création d'un sous-formulaire "mot de passe"-->      
+                <div class="passwordForm">
+                    <label for="password" class="passwordLabel">Mot de passe</label>
+                    <input type="password" name="password" id="password" value="" class="passwordField">
+                </div>
 
-                <!---boutons d'envoi--->
-                <button class="submitButton">Se connecter</button>
-                <button class="forgottenPwButton">Mot de passe oublié</button>
+                <!--Création d'un bloc "boutons d'envoi"-->
+                <div class="buttonForm">
+                    <button class="submitButton">Se connecter</button>
+                    <button class="forgottenPwButton">Mot de passe oublié</button>
+                </div>
             </form>
         </section>
     </main>

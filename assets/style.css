@@ -23,7 +23,8 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
+/* HTML5 display-role reset for older browsers -------------------------------------------------------------- */
+
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
@@ -52,7 +53,11 @@ a {
 	color: black;
 }
 
-/** end reset css**/
+/* end reset css ----
+----------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------*/
+
+
 body {
 	max-width: 1140px;
 	margin:auto;
@@ -109,6 +114,8 @@ li:hover, li a:hover {
 	align-items: center;
 }
 #introduction figure {
+	display: flex;
+	flex-direction: column;
 	flex: 1
 }
 #introduction img {
@@ -131,44 +138,6 @@ li:hover, li a:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
-/* AJOUT DES STYLES DU MENU DE FILTRES----------*/
-
-.filters {
-	display: flex;
-	flex-direction: row;
-	margin: 51px 20%;
-	justify-content: space-between;
-}
-
-.filters li {
-	padding: 12px;
-	color: #1D6154;
-	font-size: 18px;
-	font-family: 'Syne';
-	border: solid 1px #1D6154;
-	border-radius: 24px;
-}
-
-.filters li:hover {
-	color: white;
-	background-color: #1D6154;
-}
-
-li.allCategories {
-	color: white;
-	border: 0px;
-	background-color: #1D6154;
-	border: solid 1px white;
-	
-}
-
-li.allCategories:hover {
-	color: #1D6154;
-	background-color: white;
-	border: solid 1px #1D6154;
-}
-
-/*-------------------------------------*/
 
 .gallery {
 	width: 100%;
@@ -231,7 +200,82 @@ footer nav ul {
 	margin: 2em
 }
 
-/*---------PAGE LOGIN ---------------*/
+/* ÉLÉMENTS CHANGEANTS EN FONCTION DES STATUTS LOGIN ET LOGOUT --------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------- 
+----------------------------------------------------------------------------------------------------------------------------- 
+----------------------------------------- */
+
+
+.loginLink {
+	display: block;
+}
+
+.logoutButton {
+	display: none;
+}
+
+.modifProfile, .modifWork {
+	display: none;
+	text-decoration: none;
+    color: black;
+	font-size: 14px;
+	padding: 10px 0 0 57px;
+}
+
+.modifIcon {
+	padding-right: 11px;
+}
+
+.titleContainer{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	margin: auto;
+    width: 30%;
+}
+
+/* AJOUT DES STYLES DU MENU DE FILTRES --------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------*/
+
+.filters {
+	display: flex;
+	flex-direction: row;
+	margin: 51px 20%;
+	justify-content: space-between;
+}
+
+.filters li {
+	padding: 12px;
+	color: #1D6154;
+	font-size: 18px;
+	font-family: 'Syne';
+	border: solid 1px #1D6154;
+	border-radius: 24px;
+}
+
+.filters li:hover {
+	color: white;
+	background-color: #1D6154;
+}
+
+li.allCategories {
+	color: white;
+	border: 0px;
+	background-color: #1D6154;
+	border: solid 1px white;
+	
+}
+
+li.allCategories:hover {
+	color: #1D6154;
+	background-color: white;
+	border: solid 1px #1D6154;
+}
+
+/* AJOUT DES STYLES DE LA PAGE LOGIN ----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------*/
 
 .bold {
 	font-weight: 800;
@@ -247,6 +291,16 @@ footer nav ul {
 	margin: auto;
 	display: flex;
 	flex-direction: column;
+}
+
+.emailForm, .passwordForm {
+	display: flex;
+	flex-direction: column;
+}
+
+.buttonForm {
+	display: flex;
+	flex-direction: column-reverse;
 }
 
 .emailField, .passwordField {
@@ -281,4 +335,26 @@ footer nav ul {
 
 .passwordLabel, .emailLabel {
 	margin-bottom: 7px;
+}
+
+/* AJOUT DES STYLES DE LA MODALE ---------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------*/
+
+.modaleWork {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background:rgba(0, 0, 0, 0.8);
+}
+
+.modaleWrapper {
+	width: 630px;
+	height: 731;
+	background-color: white;
 }
