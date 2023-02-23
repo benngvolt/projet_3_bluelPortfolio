@@ -341,7 +341,7 @@ li.allCategories:hover {
 ------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------*/
 
-.modaleWork {
+.modalWork {
 	position: fixed;
 	display: flex;
 	align-items: center;
@@ -353,8 +353,62 @@ li.allCategories:hover {
 	background:rgba(0, 0, 0, 0.8);
 }
 
-.modaleWrapper {
+.modalWrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	overflow: auto;
 	width: 630px;
-	height: 731;
+	height: 731px;
 	background-color: white;
+	border-radius: 10px;
+}
+
+aside div h1 {
+	display: block;
+	margin: 60px auto 46px auto;
+    font-family: 'Work Sans';
+    font-size: 26px;
+    font-weight: 500;
+    color:black;
+}
+
+.removeGalleryButton {
+	font-family: 'Syne';
+	font-size: 14px;
+    font-weight: 400;
+    color:#D65353;
+	border: none;
+	background: none;
+	padding: 23px 0 48px 0;
+}
+
+.addPicButton {
+	margin: 0 auto 0 auto;
+	color: white;
+	border: 0px;
+	background-color: #1D6154;
+	border: solid 1px white;
+	border-radius: 24px;
+	font-size: 14px;
+	font-family: 'Syne';
+	width: 237px;
+	height: 36px;
+}
+
+.modalButtons {
+	padding: 38px 90px 23px 90px;
+	border-top: solid 1px rgb(179,179,179); 
+	margin: 0 auto 0 auto;
+	display: flex;
+	flex-direction: column;
+}
+
+.closeButton {
+	position: relative;
+	bottom: 334px;
+    left: 609px;
+    border: none;
+    background: none;
+    font-size: 20px;
 }

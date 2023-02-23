@@ -163,19 +163,25 @@ document.addEventListener("DOMContentLoaded", function() { /*on exécute cette p
 
     /* EXECUTION DE LA FONCTION CHECKAUTH avec 'tokenValue' en paramètre */
     checkAuth (tokenValue);
+
+    /* OUVERTURE DE LA MODALE -------------------------------------------------------*/
+
+    const modalWork = document.getElementById ("modalWork");
+    const closeButton = document.querySelector (".closeButton");
+
+    const openWorkModal = function (event) {
+        event.preventDefault();
+        modalWork.style.display = null;
+        closeButton.addEventListener("click", closeWorkModal);
+    }
+
+    const closeWorkModal = function (event) {
+        event.preventDefault();
+        modalWork.style.display = "none";
+    }
+
+    modifWork.addEventListener("click", openWorkModal);
 })
-
-
-
-/* OUVERTURE DE LA MODALE */
-/*
-const openModale = function (event) {
-    event.preventDefault();
-
-}
-const modifWork = document.querySelector (".modifWork");
-modifWork.addEventListener("click", openModale)*/
-
 
 
 

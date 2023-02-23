@@ -33,7 +33,7 @@
 			<img src="./assets/images/sophie-bluel.png" alt="">
 
 			<!-- CRÉATION D'UN BOUTON DE MODIFICAION DE LA PHOTO DE PROFILE (en CSS 'display: none' par défault)-->
-			<a class="modifProfile" href=""><p><i class="modifIcon fa-regular fa-pen-to-square"></i>Modifier</p></a>
+			<a class="modifProfile" href="#modalProfile"><p><i class="modifIcon fa-regular fa-pen-to-square"></i>Modifier</p></a>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -42,34 +42,30 @@
 			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
 		</article>
 	</section>
+	<!-- MODALE POUR MODIFIER LES TRAVAUX ICI------------------------------------------------------------------- -->
+
+	<aside id="modalWork" class="modalWork" role="dialog" style="display:none;">
+		<button class="closeButton"><i class="fa-solid fa-xmark"></i></button>
+		<div class="modalWrapper">
+			<h1>Galerie photo</h1>
+			<ul class="galeryContainer">
+				<li>
+				</li>
+			</ul>
+			<div class="modalButtons">
+				<button class="addPicButton">Ajouter une photo</button>
+				<button class="removeGalleryButton">Supprimer la galerie</button>
+			</div>
+		</div>
+	</aside>
+
+	<!-- END __ MODALE POUR MODIFIER LES TRAVAUX ICI----------------------------------------------------------- -->
 	<section id="portfolio">
 		<div class="titleContainer">
 			<h2>Mes Projets</h2>
-
 			<!-- CRÉATION D'UN BOUTON DE MODIFICAION DES TRAVAUX (en CSS 'display: none' par défault)-->
-			<a class="modifWork" href="#modaleWork"><p><i class="modifIcon fa-regular fa-pen-to-square"></i>Modifier</p></a>
+			<a class="modifWork" href="#modalWork"><p><i class="modifIcon fa-regular fa-pen-to-square"></i>Modifier</p></a>
 		</div>
-
-
-
-		<!-- MODALE POUR MODIFIER LES TRAVAUX ICI------------------------------------------------------------------- -->
-
-		<!-- <aside id="modaleWork" class="modale" role="dialog">
-			<div class="modaleWrapper">
-				<h1>Galerie photo</h1>
-				<ul class="galeryContainer">
-					<li>
-					</li>
-				</ul>
-				<button>Ajouter une photo</button>
-				<button>Supprimer la galerie</button>
-			</div>
-		</aside> -->
-
-		<!-- END __ MODALE POUR MODIFIER LES TRAVAUX ICI----------------------------------------------------------- -->
-
-
-
 		<!-- CRÉATION D'UNE BARRE DE BOUTONS DE FILTRES 'CATEGORIES DE TRAVAUX' (en CSS 'display: none' en mode logIn):-->
 		<ul class="filters">
 			<!-- Création d'un filtre "tous" inconditionnellement présent, quel que soit le nombre de catégories -->
