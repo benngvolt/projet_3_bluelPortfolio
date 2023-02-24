@@ -37,6 +37,7 @@ Promise.all([worksResponse, categoriesResponse])
             for (let i=0 ; i < works.length ; i++) {
                 work = works[i]; /* RECUPERATION DES OBJETS 'work' et 'category' dans des variables---------------------------------*/
                 const figureElement = document.createElement("figure"); /* CREATION D'UN ELEMENT PARENT pour contenir <img> + <figcaption> de chaque projet*/
+                figureElement.id = `figure${work.id}`;
                 sectionGallery.appendChild(figureElement); 
 
                 const imageElement = document.createElement("img"); /* CREATION D'UN ELEMENT <img> par projet, avec ses attributs*/
@@ -47,6 +48,52 @@ Promise.all([worksResponse, categoriesResponse])
                 figcaptionElement.innerText = work.title;
                 figureElement.appendChild(imageElement);                
                 figureElement.appendChild(figcaptionElement);
+
+                /* AFFICHAGE DES TEMPLATES DE LA MODALE MODIF WORKS ----------------------------------------------------------------------------------------
+                ------------------------------------------------------------------------------------------------------------------------------*/
+                
+                const templatesContainer = document.querySelector (".templatesContainer");
+                const templateElement = document.createElement ("li");
+                templateElement.id = `template${work.id}`;
+
+                const templateImage = document.createElement("img");
+                templateImage.setAttribute("class","templateImage");
+                templateImage.src = work.imageUrl;
+                imageElement.alt = work.title;
+
+                const editButton = document.createElement ("button");
+                editButton.innerText = "éditer";
+
+                const trashButton = document.createElement ("button");
+                trashButton.setAttribute("class","trashButton");
+                trashButton.id = work.id;
+
+                const trashIcon = document.createElement ("i");
+                trashIcon.setAttribute("class","trashIcon fa-regular fa-trash-can");
+                
+                templatesContainer.appendChild (templateElement);
+                templateElement.appendChild (templateImage);
+                templateElement.appendChild (editButton);
+                templateElement.appendChild (trashButton);
+                trashButton.appendChild (trashIcon);
+
+                let tokenValue = sessionStorage.getItem('1');
+                trashButton.addEventListener("click", function() {
+                    fetch("http://localhost:5678/api/works/" + trashButton.id, {
+                        method: 'DELETE',
+                        headers: {
+                            "Authorization": 'Bearer ' + tokenValue.replace(/"/g, '')
+                        }
+                    })
+                    .then ((response) => {
+                        if(response.ok) {
+                            document.getElementById(figureElement.id).remove();
+                            document.getElementById(templateElement.id).remove();
+                        } else {
+                            console.log("delete error");
+                        }
+                    })
+                })
             }
         }
 
@@ -113,7 +160,7 @@ Promise.all([worksResponse, categoriesResponse])
 -------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 /* RECUPERATION DU TOKEN d'identification présent dans le stockage local (dans le cas d'authentification réussie) dans une variable 'tokenValue' */        
-let tokenValue = localStorage.getItem("1");
+let tokenValue = sessionStorage.getItem("1");
 
 /* CREATION DE DEUX FONCTIONS, l'une pour définir le mode logged IN de la page, l'autre pour le mode logged OUT */
 
@@ -147,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function() { /*on exécute cette p
 
     /* CREATION D'UN EVENEMENT sur le bouton logout puis exécution des modifications: effacement du token et fonction logOut*/
     logoutButton.addEventListener("click", function() {
-        window.localStorage.removeItem("1");
+        window.sessionStorage.removeItem("1");
         logoutVersion(loginLink,logoutButton, modifProfile, modifWork, filters);
     })
     

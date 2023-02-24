@@ -29,7 +29,6 @@ et exécution d'une requête POST via l'API pour vérification identification---
 loginForm.addEventListener ("submit", async function(event){
     /* empêchement du navigateur de recharger la page par défault */
     event.preventDefault();
-    console.log("coucou")
     /* stockage des valeurs email et password entrées en input dans le champs de saisie, dans des variables email et password*/
     let email = emailField.value;
     let password = passwordField.value;
@@ -45,14 +44,14 @@ loginForm.addEventListener ("submit", async function(event){
         .then((data) => {
             if(data.token) {
                 console.log("autorisé");
-                /*si authentification réussie, stockage du token en local storage et redirection vers la page d'accueil en mode logged In (cf script.js)*/
-                window.localStorage.setItem(JSON.stringify(data.userId),JSON.stringify(data.token));
+                /*si authentification réussie, stockage du token en session storage et redirection vers la page d'accueil en mode logged In (cf script.js)*/
+                window.sessionStorage.setItem(JSON.stringify(data.userId),JSON.stringify(data.token));
                 window.location.href = "index.html";
             } else {
                 /*si authentification échouée, message d'alerte via une boîte de dialogue*/
                 (console.log("refusé"));
                 window.alert("utilisateur / mot de passe incorrects");
-        } 
+        }
     })
         .catch((error) => console.error(error))
 })

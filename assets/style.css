@@ -53,6 +53,14 @@ a {
 	color: black;
 }
 
+button{
+	border: none;
+	background: none;
+	padding: 0;
+}
+
+
+
 /* end reset css ----
 ----------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------*/
@@ -313,7 +321,6 @@ li.allCategories:hover {
 .submitButton {
 	padding: 12px;
 	color: white;
-	border: 0px;
 	background-color: #1D6154;
 	border: solid 1px white;
 	border-radius: 24px;
@@ -324,8 +331,6 @@ li.allCategories:hover {
 }
 
 .forgottenPwButton {
-	background: none;
-	border: none;
 	text-decoration: underline;
 }
 
@@ -378,8 +383,6 @@ aside div h1 {
 	font-size: 14px;
     font-weight: 400;
     color:#D65353;
-	border: none;
-	background: none;
 	padding: 23px 0 48px 0;
 }
 
@@ -408,7 +411,33 @@ aside div h1 {
 	position: relative;
 	bottom: 334px;
     left: 609px;
-    border: none;
-    background: none;
     font-size: 20px;
+}
+
+.templatesContainer {
+	display: grid;
+	width: 68%;
+	margin: 0 auto;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-row-gap: 15px;
+}
+
+.templateImage {
+	width: 78px;
+	height: 104px;
+}
+
+.trashIcon {
+	font-size: 10px;
+	color: white;
+}
+
+.trashButton {
+	position: relative;
+	bottom: 102px;
+    left: 18px;
+	width: 17px;
+	height: 17px;
+	background-color: black;
+	border-radius: 2px;
 }
