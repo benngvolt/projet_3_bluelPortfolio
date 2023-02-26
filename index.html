@@ -42,22 +42,54 @@
 			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
 		</article>
 	</section>
-	<!-- MODALE POUR MODIFIER LES TRAVAUX ICI------------------------------------------------------------------- -->
+	<!-- MODALE POUR MODIFIER LES TRAVAUX ICI--------------------------------------------------------------------->
 
 	<aside id="modalWork" class="modalWork" role="dialog" style="display:none;">
 		<button class="closeButton"><i class="fa-solid fa-xmark"></i></button>
-		<div class="modalWrapper">
-			<h1>Galerie photo</h1>
-			<ul class="templatesContainer">
+		<button class="goBackButton"><i class="fa-light fa-arrow-left"></i></button>
+		
+		<!-- PARTIE GALLERIE PHOTO ------------------------------------------------------------------------------->
+		<div class="modalWrapper modalGallery">
+			<h2>Galerie photo</h2> <!-- PARTIE GALLERIE -->
+			<ul class="templatesContainer"> <!-- PARTIE GALLERIE -->
 			</ul>
-			<div class="modalButtons">
+			<div class="modalButtons"> <!-- PARTIE GALLERIE -->
 				<button class="addPicButton">Ajouter une photo</button>
 				<button class="removeGalleryButton">Supprimer la galerie</button>
 			</div>
 		</div>
+
+		<!-- PARTIE FORMULAIRE D'AJOUT PHOTO ------------------------------------------------------------------------------->
+		<div class="modalWrapper modalAdd">
+			<h2>Ajout photo</h2>
+
+			<form method="post" action="#" class="addPicForm">
+				<div class="picFieldContainer">
+					<i class="picIcon fa-thin fa-image"></i>
+					<input class="picInputButton" value="+ Ajouter photo">
+					<p class="picText">jpg, png, 4mo max</p>
+				</div>
+
+                <!--Création d'un sous-formulaire "titre"-->
+                <div class="titleForm">
+                    <label for="title" class="titleLabel">Titre</label>
+                    <input type="title" name="title" id="title" value="" class="titleField">
+                </div>
+
+                <!--Création d'un sous-formulaire "catégorie"-->      
+                <div class="categoryForm">
+                    <label for="category" class="categoryLabel">Catégorie</label>
+                    <input type="category" name="category" id="category" value="" class="categoryField">
+                </div>
+
+                <!--Création d'un bloc "boutons d'envoi"-->
+      			<input type="submit" value="Valider" id="validateButton"/>
+            </form>
+		</div>
 	</aside>
 
 	<!-- END __ MODALE POUR MODIFIER LES TRAVAUX ICI----------------------------------------------------------- -->
+
 	<section id="portfolio">
 		<div class="titleContainer">
 			<h2>Mes Projets</h2>

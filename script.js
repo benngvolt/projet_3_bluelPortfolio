@@ -215,19 +215,39 @@ document.addEventListener("DOMContentLoaded", function() { /*on exécute cette p
 
     const modalWork = document.getElementById ("modalWork");
     const closeButton = document.querySelector (".closeButton");
+    const goBackButton = document.querySelector (".goBackButton");
+    const modalGallery = document.querySelector (".modalGallery");
+    const modalAdd = document.querySelector (".modalAdd");
 
     const openWorkModal = function (event) {
         event.preventDefault();
         modalWork.style.display = null;
+        modalAdd.style.display = 'none';
         closeButton.addEventListener("click", closeWorkModal);
     }
 
     const closeWorkModal = function (event) {
         event.preventDefault();
-        modalWork.style.display = "none";
+        modalGallery.style.display = null;
+        modalAdd.style.display = 'none';
+        modalWork.style.display = 'none';
     }
 
     modifWork.addEventListener("click", openWorkModal);
+
+    /* OUVERTURE DU MODE EDITION / AJOUT PHOTO */
+
+    const addPicButton = document.querySelector (".addPicButton");
+
+    const openEditionMode = function (event) {
+        event.preventDefault();
+        modalGallery.style.display = 'none';
+        modalAdd.style.display = null;
+        goBackButton.style.display = "block";
+    }
+
+    addPicButton.addEventListener("click", openEditionMode);
+
 })
 
 

@@ -301,9 +301,13 @@ li.allCategories:hover {
 	flex-direction: column;
 }
 
-.emailForm, .passwordForm {
+.emailForm, .passwordForm, .titleForm, .categoryForm {
 	display: flex;
 	flex-direction: column;
+}
+
+.categoryForm {
+    border-bottom: solid 1px rgb(179,179,179);
 }
 
 .buttonForm {
@@ -311,7 +315,7 @@ li.allCategories:hover {
 	flex-direction: column-reverse;
 }
 
-.emailField, .passwordField {
+.emailField, .passwordField, .titleField, .categoryField {
 	height: 51px;
 	border: none;
 	box-shadow: 5px 5px 5px rgba(0,0,0,8%);
@@ -338,7 +342,7 @@ li.allCategories:hover {
 	margin-top: 379px;
 }
 
-.passwordLabel, .emailLabel {
+.passwordLabel, .emailLabel, .titleLabel, .categoryLabel {
 	margin-bottom: 7px;
 }
 
@@ -359,17 +363,20 @@ li.allCategories:hover {
 }
 
 .modalWrapper {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	overflow: auto;
 	width: 630px;
 	height: 731px;
 	background-color: white;
 	border-radius: 10px;
 }
 
-aside div h1 {
+.modalGallery, .modalAdd {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	overflow: auto;
+}
+
+aside div h2 {
 	display: block;
 	margin: 60px auto 46px auto;
     font-family: 'Work Sans';
@@ -441,3 +448,65 @@ aside div h1 {
 	background-color: black;
 	border-radius: 2px;
 }
+
+.picFieldContainer {
+	width: 420px;
+	height: 169px;
+	background-color: #E8F1F6;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	margin: 0 auto 30px auto;
+}
+
+.picIcon, .picText, .picInputButton {
+	margin: 0 auto 0 auto;
+}
+
+.picIcon {
+	font-size: 30px;
+}
+
+.picInputButton {
+	text-align: center;
+	margin: 0 auto 0 auto;
+	color: #1D6154;
+	border: 0px;
+	background-color: #CBD6DC;
+	border: none;
+	border-radius: 24px;
+	font-size: 14px;
+	font-family: 'Work Sans';
+	width: 237px;
+	height: 36px;
+}
+
+#validateButton {
+	margin: 38px auto 0 auto;
+	color: white;
+	border: 0px;
+	background-color: #A7A7A7;
+	border: solid 1px white;
+	border-radius: 24px;
+	font-size: 14px;
+	font-family: 'Syne';
+	width: 237px;
+	height: 36px;
+}
+
+.addPicForm {
+	width: 420px;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+}
+
+.goBackButton {
+	display: none;
+	position: relative;
+	bottom: 334px;
+    left: 45px;
+    font-size: 20px;
+}
+
+
