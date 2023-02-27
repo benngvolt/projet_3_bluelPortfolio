@@ -243,11 +243,75 @@ document.addEventListener("DOMContentLoaded", function() { /*on exécute cette p
         event.preventDefault();
         modalGallery.style.display = 'none';
         modalAdd.style.display = null;
-        goBackButton.style.display = "block";
+        goBackButton.style.display = 'block';
     }
 
     addPicButton.addEventListener("click", openEditionMode);
 
+    /* AJOUT D'UN NOUVEAU PROJET AVEC REQUETE POST et FORMDATA */
+
+    /* création d'une variable pour définir le formulaire d'ajout */
+    const addWorkForm = document.querySelector(".addWorkForm");
+    
+    /* création d'un écouteur d'évènement pour soumettre le formulaire */
+
+    const inputFiles = document.querySelector('#inputFiles');
+    const inputTitle = document.querySelector('#title');
+    const inputCategory = document.querySelector('#category');
+    const picFieldContainer = document.querySelector('.picFieldContainer');
+
+    inputFiles.addEventListener('change', function displayTemplate(){
+        console.log("image uploadee");
+
+        const picIcon = document.querySelector('.picIcon');
+        const imgTemplate = document.createElement("img");
+        picFieldContainer.appendChild(imgTemplate);
+
+        picIcon.style.display="none";
+
+        const file = inputFiles.files[0];
+        const reader = new FileReader();
+        
+        reader.readAsDataURL(file);
+        
+        reader.onload = function() {
+            imgTemplate.setAttribute("src", reader.result);
+            imgTemplate.setAttribute("alt", "");
+            imgTemplate.setAttribute("class", "imgTemplate");
+        }
+    });
+
+    addWorkForm.addEventListener('submit',formSubmit);
+
+    async function formSubmit(event) {
+
+        event.preventDefault();
+        const workFormData = new FormData();
+
+        workFormData.append('image', inputFiles.files[0]);
+        workFormData.append('title', inputTitle.value);
+        workFormData.append('category', inputCategory.value);
+
+      
+        // Envoyer formData à votre backend pour le traitement
+
+        fetch('http://localhost:5678/api/works', {
+            method: 'POST',
+            headers: {
+                "Authorization": 'Bearer ' + tokenValue.replace(/"/g, '')
+            },
+            body: workFormData
+        })
+          .then(response => {
+            console.log(workFormData);
+            console.log(response);
+          })
+          .catch(error => {
+            (console.error);
+          });
+    }
+
+      
 })
 
 

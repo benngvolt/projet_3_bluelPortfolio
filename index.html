@@ -63,10 +63,11 @@
 		<div class="modalWrapper modalAdd">
 			<h2>Ajout photo</h2>
 
-			<form method="post" action="#" class="addPicForm">
+			<form method="post" action="#" class="addWorkForm">
 				<div class="picFieldContainer">
 					<i class="picIcon fa-thin fa-image"></i>
-					<input class="picInputButton" value="+ Ajouter photo">
+					<label for="inputFiles" class="picInputButton">+ Ajouter Photo</label>
+					<input type="file" name="image" id="inputFiles" value="" style="visibility:hidden;">
 					<p class="picText">jpg, png, 4mo max</p>
 				</div>
 
