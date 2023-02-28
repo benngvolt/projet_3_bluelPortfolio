@@ -449,7 +449,7 @@ aside div h2 {
 
 .picFieldContainer {
 	width: 420px;
-	height: 169px;
+	height: 193px;
 	background-color: #E8F1F6;
 	display: flex;
 	flex-direction: column;
@@ -508,4 +508,7 @@ aside div h2 {
     font-size: 20px;
 }
 
-
+.imgTemplate {
+	height: 193px;
+    margin: auto;
+}
