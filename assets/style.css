@@ -465,12 +465,13 @@ aside div h2 {
 	margin: 0 auto 30px auto;
 }
 
-.picIcon, .picText, .picInputButton {
+.picText, .picInputButton {
 	margin: 0 auto 0 auto;
 }
 
 .picIcon {
 	font-size: 30px;
+	margin: 40px auto 40px auto;
 }
 
 .picInputButton {

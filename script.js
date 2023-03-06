@@ -1,4 +1,4 @@
-import { generateWorks } from "./works.js";
+import { generateWorks, generateAddedWork } from "./works.js";
 import { createFilters } from "./categories.js";
 
 // RECUPERATION DES TABLEAUX 'works' ET 'categories' (sous forme de chaînes de caractères) VIA L'API avec methode FETCH en GET, puis stockage des réponses dans des constantes --------
@@ -22,17 +22,9 @@ Promise.all([worksResponse, categoriesResponse])
             const works = jsonResponse[0];
             const categories = jsonResponse[1];
             
-            // ---- AFFICHAGE DES PROJETS ----------------------------------------------------------------------------------------------------------
-            for (let i=0 ; i < works.length ; i++) {
-                let work = works[i]; /* RECUPERATION DES OBJETS 'work' et 'category' dans des variables---------------------------------*/
-                let figureId = `figure${work.id}`;
-                let templateId = `template${work.id}`;
-                let imgSrc = work.imageUrl;
-                let imgTitle = work.title;
-                let workId = work.id;
-                generateWorks (figureId, templateId, imgSrc, imgTitle, workId);
-            }
-
+            // ---- AFFICHAGE DES PROJETS ----------------------------------------------------------------------------------------------------------    
+            generateWorks (works);
+            
             // ---- AFFICHAGE DES FILTRES ----------------------------------------------------------------------------------------------------------
             createFilters (categories, works);
         })
@@ -140,12 +132,24 @@ document.addEventListener("DOMContentLoaded", function() { // on exécute cette 
     }
     goBackButton.addEventListener("click", goBackModal);
 
+
+
+
+
+
+
+
+
     // ---- AJOUT D'UN NOUVEAU PROJET AVEC REQUETE POST et FORMDATA 
     
+
+
+
+
+
+
     // ---- création d'une variable pour définir le formulaire d'ajout
     const addWorkForm = document.querySelector(".addWorkForm");
-    
-    // ---- création d'un écouteur d'évènement pour soumettre le formulaire 
 
     // ---- création des éléments du DOM pour afficher le template image
     const inputFiles = document.querySelector('#inputFiles');
@@ -191,7 +195,8 @@ document.addEventListener("DOMContentLoaded", function() { // on exécute cette 
     }
 
     inputFiles.addEventListener('change', displayTemplate);
-
+    
+    // ---- création d'un écouteur d'évènement pour soumettre le formulaire 
     addWorkForm.addEventListener('submit',formSubmit);
 
     async function formSubmit(event) {
@@ -204,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function() { // on exécute cette 
         workFormData.append('category', inputCategory.value);
 
       
-        // ---- Envoyer formData à votre backend pour le traitement, à condition que tous les champs soient remplis
+        // ---- Envoyer formData au backend pour le traitement, à condition que tous les champs soient remplis
 
         fetch('http://localhost:5678/api/works', {
             method: 'POST',
@@ -226,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function() { // on exécute cette 
                     let imgTitle = inputTitle.value;
                     let workId = data.id;
 
-                    generateWorks (figureId, templateId, imgSrc, imgTitle, workId);
+                    generateAddedWork (figureId, templateId, imgSrc, imgTitle, workId);
 
                     //revenir à la modale précédente: 
                     event.preventDefault();
