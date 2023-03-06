@@ -318,6 +318,7 @@ li.allCategories:hover {
 	border: none;
 	box-shadow: 5px 5px 5px rgba(0,0,0,8%);
 	margin-bottom: 37px;
+	padding-left: 15px;
 }
 
 .submitButton {
@@ -334,6 +335,7 @@ li.allCategories:hover {
 
 .forgottenPwButton {
 	text-decoration: underline;
+	margin: 0 auto 0 auto;
 }
 
 .loginFooter {
@@ -343,6 +345,12 @@ li.allCategories:hover {
 .passwordLabel, .emailLabel, .titleLabel, .categoryLabel {
 	margin-bottom: 7px;
 }
+
+.alertMessage {
+	color: red;
+	margin: 0 auto 37px auto;
+}
+
 
 /* AJOUT DES STYLES DE LA MODALE ---------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------

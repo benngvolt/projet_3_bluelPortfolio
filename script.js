@@ -1,162 +1,40 @@
-/* RECUPERATION DES TABLEAUX 'works' ET 'categories' (sous forme de chaînes de caractères) VIA L'API avec methode FETCH en GET, puis stockage des réponses dans des constantes -------- */
+import { generateWorks } from "./works.js";
+import { createFilters } from "./categories.js";
+
+// RECUPERATION DES TABLEAUX 'works' ET 'categories' (sous forme de chaînes de caractères) VIA L'API avec methode FETCH en GET, puis stockage des réponses dans des constantes --------
 
 const worksResponse = fetch("http://localhost:5678/api/works");
 const categoriesResponse = fetch("http://localhost:5678/api/categories");
 
-/* DECLARATION DE DEUX VARIABLES pour définir les DEUX TABLEAUX 'works' et 'categories' AU FORMAT JSON afin de les utiliser par la suite, 
-PUIS LES VARIABLES 'work' et 'category' pour définir les OBJETS contenus dans ces tableaux, et pouvoir récupérer leurs propriétés -----*/
-let works;
-let work;
-let categories;
-let category;
-
-/* CRÉATION D'UNE PROMESSE relative à l'exécution des méthodes fetch asynchrones -----------------------------------------------------*/
+// CRÉATION D'UNE PROMESSE relative à l'exécution des méthodes fetch asynchrones -------------------------------------------------------------------
 
 Promise.all([worksResponse, categoriesResponse])   
 
-        /* PARSING DE LA REPONSE (string) en OBJETS JSON */
+        // PARSING DE LA REPONSE (string) en OBJETS JSON -------------------------------------------------------------------------------------------
         .then((response) => {
             const worksData = response[0];
             const categoriesData = response[1];
             return Promise.all([worksData.json(), categoriesData.json()]);
         })
         
-        /* RECUPERATION DES TABLEAUX JSON dans des constantes 'works' et 'categories' */
+        // ---- RECUPERATION DES TABLEAUX JSON dans des constantes 'works' et 'categories'----------------------------------------------------------
         .then((jsonResponse) => {
             const works = jsonResponse[0];
             const categories = jsonResponse[1];
-
-
-            /* ---- AFFICHAGE DES PROJETS -------------------------------------------------------------------------------------------------
-            -----------------------------------------------------------------------------------------------------------------------------*/
-
-            /* CREATION D'UNE FONCTION: on intéragit avec le DOM pour créer les éléments correspondants aux balises / 
-            puis on génère l'affichage de chaque projet en utilisant la boucle for --------------------------------*/    
             
-            function generateWorks (works){
-                const sectionGallery = document.querySelector(".gallery"); /* DEFINITION DE L'ELEMENT PARENT sectionGallery POUR L'AFFICHAGE DES PROJETS*/
-                for (let i=0 ; i < works.length ; i++) {
-                    work = works[i]; /* RECUPERATION DES OBJETS 'work' et 'category' dans des variables---------------------------------*/
-                    const figureElement = document.createElement("figure"); /* CREATION D'UN ELEMENT PARENT pour contenir <img> + <figcaption> de chaque projet*/
-                    figureElement.id = `figure${work.id}`;
-                    sectionGallery.appendChild(figureElement); 
-
-                    const imageElement = document.createElement("img"); /* CREATION D'UN ELEMENT <img> par projet, avec ses attributs*/
-                    imageElement.src = work.imageUrl;
-                    imageElement.alt = work.title;
-
-                    const figcaptionElement = document.createElement("figcaption"); /* CREATION D'UN ELEMENT <figcaption> par projet, avec ses attributs et sa légende associée*/
-                    figcaptionElement.innerText = work.title;
-                    figureElement.appendChild(imageElement);                
-                    figureElement.appendChild(figcaptionElement);
-
-                    /* AFFICHAGE DES TEMPLATES DE LA MODALE MODIF WORKS ----------------------------------------------------------------------------------------
-                    ------------------------------------------------------------------------------------------------------------------------------*/
-                    
-                    const templatesContainer = document.querySelector (".templatesContainer");
-                    const templateElement = document.createElement ("li");
-                    templateElement.id = `template${work.id}`;
-
-                    const templateImage = document.createElement("img");
-                    templateImage.setAttribute("class","templateImage");
-                    templateImage.src = work.imageUrl;
-                    imageElement.alt = work.title;
-
-                    const editButton = document.createElement ("button");
-                    editButton.innerText = "éditer";
-
-                    /* SUPPRESION DES TRAVAUX -------------------------------------------------------------------------------------------------------------*/
-
-                    const trashButton = document.createElement ("button");
-                    trashButton.setAttribute("class","trashButton");
-                    trashButton.id = work.id;
-
-                    const trashIcon = document.createElement ("i");
-                    trashIcon.setAttribute("class","trashIcon fa-regular fa-trash-can");
-                    
-                    templatesContainer.appendChild (templateElement);
-                    templateElement.appendChild (templateImage);
-                    templateElement.appendChild (editButton);
-                    templateElement.appendChild (trashButton);
-                    trashButton.appendChild (trashIcon);
-
-                    let tokenValue = sessionStorage.getItem('1');
-                    trashButton.addEventListener("click", function() {
-                        fetch("http://localhost:5678/api/works/" + trashButton.id, {
-                            method: 'DELETE',
-                            headers: {
-                                "Authorization": 'Bearer ' + tokenValue.replace(/"/g, '')
-                            }
-                        })
-                        .then ((response) => {
-                            if(response.ok) {
-                                document.getElementById(figureElement.id).remove();
-                                document.getElementById(templateElement.id).remove();
-                            } else {
-                                console.log("delete error");
-                            }
-                        })
-                    })
-                }
+            // ---- AFFICHAGE DES PROJETS ----------------------------------------------------------------------------------------------------------
+            for (let i=0 ; i < works.length ; i++) {
+                let work = works[i]; /* RECUPERATION DES OBJETS 'work' et 'category' dans des variables---------------------------------*/
+                let figureId = `figure${work.id}`;
+                let templateId = `template${work.id}`;
+                let imgSrc = work.imageUrl;
+                let imgTitle = work.title;
+                let workId = work.id;
+                generateWorks (figureId, templateId, imgSrc, imgTitle, workId);
             }
 
-            /* EXECUTION DE LA FONCTION pour un premier affchage par défault des travaux -------------------------------------------------*/
-            generateWorks (works);
-
-            /* ---- AFFICHAGE DES FILTRES --------------------------------------------------------------------------------------------------
-            ------------------------------------------------------------------------------------------------------------------------------*/
-
-            /* IDEM... COMMUNICATION avec le DOM pour créer les éléments correspondants aux balises / 
-            puis GENERATION DE l'affichage des filtres en utilisant la boucle 'for' ---------------*/
-
-            const sectionFilters = document.querySelector(".filters");
-            const allCategoriesElement = document.querySelector(".allCategories");
-            sectionFilters.appendChild(allCategoriesElement);
-
-            for (let u=0 ; u < categories.length; u++){
-                category = categories[u];
-                let categoryId = category.id;
-                const categoryElement = document.createElement("li");
-                
-                /* CREATION D'UNE LISTE DE SELECTION DANS LA MODALE "AJOUT" POUR CHOISIR LA CATEGORIE ------------------------------------------------------------------------------ */
-                const categoryField = document.querySelector(".categoryField");
-                const categoryOption = document.createElement("option");
-                categoryField.appendChild(categoryOption);
-                categoryOption.setAttribute("value",`${category.id}`);
-                categoryOption.innerText = category.name;
-
-                /* CREATION D'UNE CLASSE par balise <li> dans le HTML*/
-                categoryElement.setAttribute("class",`category${category.id}`);/* CONCATENATION des strings 'category'+ variable d'identification de la categorie, 
-                afin de différencier les catégories dans les classes -------------------------------------------------------------------------------------------*/
-                sectionFilters.appendChild(categoryElement);
-                categoryElement.innerText = category.name; /*AFFICHAGE DU NOM DE LA CATEGORIE A FILTRER par bouton */
-                
-                /* CREATION D'UN EVENEMENT LIÉ AUX BOUTONS DE FILTRES dans le HTML*/
-                let buttonFilter = document.querySelector(`.category${category.id}`);
-                buttonFilter.addEventListener("click",function(){
-                    for (let i=0 ; i < works.length; i++) {
-                        work = works[i];
-                    }
-                    /* DEFINITION D'UNE FONCTION DE FILTRE PAR CATEGORIE, puis STOCKAGE DE LA REPONSE DANS UNE VARIABLE worksFiltered */
-                    let worksFiltered = works.filter(function(work){
-                        return work.category.id === categoryId;
-                        })
-                    /* vérification par affichage dans la console */
-                    console.log(worksFiltered);
-
-                    /* EFFACEMENT DE LA PAGE et REGENERATION de la page avec les travaux filtrés, 
-                    en EXECUTANT la fonction de génération des travaux avec cette fois-ci l'attribut 'worksFiltered' (travaux filtrés) */
-                    document.querySelector(".gallery").innerHTML = "";
-                    generateWorks (worksFiltered);
-                    })
-                }
-
-            /* CREATION DU BOUTON "TOUS" qui affichera la totalité des travaux----------------------------------------------------*/
-            const buttonAllWorks = document.querySelector(".allCategories");
-            buttonAllWorks.addEventListener("click", function(){
-                document.querySelector(".gallery").innerHTML = "";
-                generateWorks (works);
-            })
+            // ---- AFFICHAGE DES FILTRES ----------------------------------------------------------------------------------------------------------
+            createFilters (categories, works);
         })
 
         /* CONDITION si la promesse n'est pas atteinte */
@@ -190,23 +68,23 @@ function logoutVersion(loginLink,logoutButton, modifProfile, modifWork, filters)
 /* VERIFICATION DE L'ETAT AUTHENTIFICATION et APPLICATION DES MODIFS A EFFECTUER SUR L'AFFICHAGE DE LA PAGE D'INDEX, EN FONCTION-------------------
 -------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-document.addEventListener("DOMContentLoaded", function() { /*on exécute cette partie de code dans une fonction permettant d'attendre que le DOM soit chargé*/
+document.addEventListener("DOMContentLoaded", function() { // on exécute cette partie de code dans une fonction permettant d'attendre que le DOM soit chargé
     
-    /*DEFINITION DES ELEMENTS de boutons logIn et logOut, boutons de modifications d'image de profil et des travaux, et liste de filtre */
+    // ---- DEFINITION DES ELEMENTS de boutons logIn et logOut, boutons de modifications d'image de profil et des travaux, et liste de filtre */
     const loginLink = document.querySelector (".loginLink");
     const logoutButton = document.querySelector (".logoutButton");
     const modifProfile = document.querySelector (".modifProfile");
     const modifWork = document.querySelector (".modifWork");
     const filters = document.querySelector (".filters");
 
-    /* CREATION D'UN EVENEMENT sur le bouton logout puis exécution des modifications: effacement du token et fonction logOut*/
+    // ---- CREATION D'UN EVENEMENT sur le bouton logout puis exécution des modifications: effacement du token et fonction logOut*/
     logoutButton.addEventListener("click", function() {
         window.sessionStorage.removeItem("1");
         logoutVersion(loginLink,logoutButton, modifProfile, modifWork, filters);
     })
     
-    /* CREATION DE LA FONCTION CHECKAUTH, permettant de vérifier si l'authentification est réussie ou non, 
-    et d'appliquer les modifications du mode logIN ou logOUT avec une condition if/else */
+    // ---- CREATION DE LA FONCTION CHECKAUTH, permettant de vérifier si l'authentification est réussie ou non, 
+    //et d'appliquer les modifications du mode logIN ou logOUT avec une condition if/else 
     function checkAuth (tokenValue) {
         if (tokenValue) {
             loginVersion(loginLink, logoutButton, modifProfile, modifWork, filters);
@@ -215,10 +93,10 @@ document.addEventListener("DOMContentLoaded", function() { /*on exécute cette p
         }
     }
 
-    /* EXECUTION DE LA FONCTION CHECKAUTH avec 'tokenValue' en paramètre */
+    // ---- EXECUTION DE LA FONCTION CHECKAUTH avec 'tokenValue' en paramètre 
     checkAuth (tokenValue);
 
-    /* OUVERTURE DE LA MODALE -------------------------------------------------------*/
+    // ---- OUVERTURE DE LA MODALE -------------------------------------------------------
 
     const modalWork = document.getElementById ("modalWork");
     const closeButton = document.querySelector (".closeButton");
@@ -234,13 +112,13 @@ document.addEventListener("DOMContentLoaded", function() { /*on exécute cette p
     }
 
     const closeWorkModal = function (event) {
-        event.preventDefault();
+        goBackModal(event);
         modalWork.style.display = 'none';
     }
 
     modifWork.addEventListener("click", openWorkModal);
     
-    /* OUVERTURE DU MODE EDITION / AJOUT PHOTO */
+    // ---- OUVERTURE DU MODE EDITION / AJOUT PHOTO 
 
     const addPicButton = document.querySelector (".addPicButton");
     const openEditionMode = function (event) {
@@ -251,41 +129,45 @@ document.addEventListener("DOMContentLoaded", function() { /*on exécute cette p
     }
     addPicButton.addEventListener("click", openEditionMode);
 
-    /* RETOUR EN ARRIERE VERS LE MODE SUPPR TRAVAUX */
+    // ---- RETOUR EN ARRIERE VERS LE MODE SUPPR TRAVAUX 
     
     const goBackModal = function (event) {
         event.preventDefault();
         modalGallery.style.display = 'flex';
         modalAdd.style.display = 'none';
+        //ré-initialiser la modale d'ajouts:
+        reinitAddModal();
     }
     goBackButton.addEventListener("click", goBackModal);
 
-    /* AJOUT D'UN NOUVEAU PROJET AVEC REQUETE POST et FORMDATA */
+    // ---- AJOUT D'UN NOUVEAU PROJET AVEC REQUETE POST et FORMDATA 
     
-    // création d'une variable pour définir le formulaire d'ajout
+    // ---- création d'une variable pour définir le formulaire d'ajout
     const addWorkForm = document.querySelector(".addWorkForm");
     
-    // création d'un écouteur d'évènement pour soumettre le formulaire 
+    // ---- création d'un écouteur d'évènement pour soumettre le formulaire 
 
+    // ---- création des éléments du DOM pour afficher le template image
     const inputFiles = document.querySelector('#inputFiles');
     const inputTitle = document.querySelector('#title');
     const inputCategory = document.querySelector('#category');
     const picFieldContainer = document.querySelector('.picFieldContainer');
 
-    /*AFFICHER UN TEMPLATE IMAGE DU PROJET */
-    inputFiles.addEventListener('change', function displayTemplate(){
-        console.log("image uploadee");
+    const picText = document.querySelector('.picText');
+    const picIcon = document.querySelector('.picIcon');
+    const imgTemplate = document.createElement("img");
+    const picInputButton = document.querySelector('.picInputButton');
+    picFieldContainer.appendChild(imgTemplate);
+    imgTemplate.setAttribute("class", "imgTemplate");
 
-        const picText = document.querySelector('.picText');
-        const picIcon = document.querySelector('.picIcon');
-        const imgTemplate = document.createElement("img");
-        const picInputButton = document.querySelector('.picInputButton');
-        picFieldContainer.appendChild(imgTemplate);
-        imgTemplate.setAttribute("class", "imgTemplate");
+    // ---- AFFICHER UN TEMPLATE IMAGE DU PROJET
+    function displayTemplate(){
+        console.log("image uploadee");
 
         picIcon.style.display="none";
         picText.style.display="none";
         picInputButton.style.display="none";
+        imgTemplate.style.display="block";
 
         const file = inputFiles.files[0];
         const reader = new FileReader();
@@ -297,7 +179,18 @@ document.addEventListener("DOMContentLoaded", function() { /*on exécute cette p
             imgTemplate.setAttribute("alt", "");
             imgTemplate.setAttribute("class", "imgTemplate");
         }
-    });
+    };
+
+    // ---- CREATION D'UNE FONCTION POUR REINITIALISER LA MODALE D'AJOUT ---
+    function reinitAddModal() {
+        picIcon.style.display= "block";
+        picText.style.display= "block";
+        picInputButton.style.display= "block";
+        imgTemplate.style.display ="none";
+        inputTitle.value="";
+    }
+
+    inputFiles.addEventListener('change', displayTemplate);
 
     addWorkForm.addEventListener('submit',formSubmit);
 
@@ -311,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function() { /*on exécute cette p
         workFormData.append('category', inputCategory.value);
 
       
-        // Envoyer formData à votre backend pour le traitement, à condition que tous les champs soient remplis
+        // ---- Envoyer formData à votre backend pour le traitement, à condition que tous les champs soient remplis
 
         fetch('http://localhost:5678/api/works', {
             method: 'POST',
@@ -320,13 +213,37 @@ document.addEventListener("DOMContentLoaded", function() { /*on exécute cette p
             },
             body: workFormData
         })
-            .then(response => {
-                console.log(workFormData);
-                console.log(response);
-                if(response.ok){
-                    window.location.reload();
+            //.then(response => {
+            .then(response => response.json())
+            .then(data => {
+                if(data.id){
+                    
+                    // ---- A la place d'un reload de la page, création d'éléments dans le DOM pour afficher les images dans le portfolio
+                    console.log (data);
+                    let figureId = `figure${data.id}`;
+                    let templateId = `template${data.id}`;
+                    let imgSrc = data.imageUrl;
+                    let imgTitle = inputTitle.value;
+                    let workId = data.id;
+
+                    generateWorks (figureId, templateId, imgSrc, imgTitle, workId);
+
+                    //revenir à la modale précédente: 
+                    event.preventDefault();
+                    modalGallery.style.display = 'flex';
+                    modalAdd.style.display = 'none';
+
+                    //ré-initialiser la modale d'ajouts:
+                    reinitAddModal();
+                    
                 } else {
-                    window.alert("tous les champs doivent être complétés!");
+                    const alertMessageUpload = document.createElement("p");
+                    const categoryForm = document.querySelector(".categoryForm");
+                    categoryForm.appendChild(alertMessageUpload);
+                    alertMessageUpload.innerText = "tous les champs doivent être complétés!";
+                    alertMessageUpload.setAttribute("class", "alertMessage");
+                    //ré-initialiser la modale d'ajouts:
+                    reinitAddModal();
                 }
             })
             .catch(error => {
@@ -334,18 +251,3 @@ document.addEventListener("DOMContentLoaded", function() { /*on exécute cette p
             });
     }      
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
