@@ -1,4 +1,4 @@
-import { generateWorks, generateAddedWork } from "./works.js";
+import { generateAllWorks, generateSingleWork } from "./works.js";
 import { createFilters } from "./categories.js";
 
 // RECUPERATION DES TABLEAUX 'works' ET 'categories' (sous forme de chaînes de caractères) VIA L'API avec methode FETCH en GET, puis stockage des réponses dans des constantes --------
@@ -23,7 +23,7 @@ Promise.all([worksResponse, categoriesResponse])
             const categories = jsonResponse[1];
             
             // ---- AFFICHAGE DES PROJETS ----------------------------------------------------------------------------------------------------------    
-            generateWorks (works);
+            generateAllWorks (works);
             
             // ---- AFFICHAGE DES FILTRES ----------------------------------------------------------------------------------------------------------
             createFilters (categories, works);
@@ -73,6 +73,7 @@ document.addEventListener("DOMContentLoaded", function() { // on exécute cette 
     logoutButton.addEventListener("click", function() {
         window.sessionStorage.removeItem("1");
         logoutVersion(loginLink,logoutButton, modifProfile, modifWork, filters);
+        window.location.reload();
     })
     
     // ---- CREATION DE LA FONCTION CHECKAUTH, permettant de vérifier si l'authentification est réussie ou non, 
@@ -231,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function() { // on exécute cette 
                     let imgTitle = inputTitle.value;
                     let workId = data.id;
 
-                    generateAddedWork (figureId, templateId, imgSrc, imgTitle, workId);
+                    generateSingleWork (figureId, templateId, imgSrc, imgTitle, workId);
 
                     //revenir à la modale précédente: 
                     event.preventDefault();
