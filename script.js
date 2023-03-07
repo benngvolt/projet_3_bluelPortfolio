@@ -1,158 +1,190 @@
+// ---- IMPORT DES MODULES ----
+
 import { generateAllWorks, generateSingleWork } from "./works.js";
 import { createFilters } from "./categories.js";
 
-// RECUPERATION DES TABLEAUX 'works' ET 'categories' (sous forme de chaînes de caractères) VIA L'API avec methode FETCH en GET, puis stockage des réponses dans des constantes --------
+// ---- RECUPERATION DES TABLEAUX 'works' ET 'categories' VIA L'API avec methode FETCH en GET, puis stockage des réponses dans des constantes --------
 
 const worksResponse = fetch("http://localhost:5678/api/works");
 const categoriesResponse = fetch("http://localhost:5678/api/categories");
 
-// CRÉATION D'UNE PROMESSE relative à l'exécution des méthodes fetch asynchrones -------------------------------------------------------------------
+
+
+// ----------
+// ----------------------
+// ---------------------------------
+// ----------------------------------------------
+// AFFICHAGE DES PROJETS + CREATION DES FILTRES à partir promesse asynchrone--------------------------------------------------------------------------
+
+
 
 Promise.all([worksResponse, categoriesResponse])   
 
-        // PARSING DE LA REPONSE (string) en OBJETS JSON -------------------------------------------------------------------------------------------
+        // PARSING DE LA REPONSE (string) en OBJETS JSON ---------------------------------------------------------------------------------------------
         .then((response) => {
             const worksData = response[0];
             const categoriesData = response[1];
             return Promise.all([worksData.json(), categoriesData.json()]);
         })
         
-        // ---- RECUPERATION DES TABLEAUX JSON dans des constantes 'works' et 'categories'----------------------------------------------------------
+        // ---- RECUPERATION DES TABLEAUX JSON dans des constantes 'works' et 'categories'------------------------------------------------------------
         .then((jsonResponse) => {
             const works = jsonResponse[0];
             const categories = jsonResponse[1];
             
-            // ---- AFFICHAGE DES PROJETS ----------------------------------------------------------------------------------------------------------    
+            // ---- AFFICHAGE DE TOUS LES  PROJETS ---------------------------------------------------------------------------------------------------
             generateAllWorks (works);
             
-            // ---- AFFICHAGE DES FILTRES ----------------------------------------------------------------------------------------------------------
+            // ---- CREATION DES FILTRES -------------------------------------------------------------------------------------------------------------
             createFilters (categories, works);
         })
 
-        /* CONDITION si la promesse n'est pas atteinte */
+        // CONDITION si la promesse n'est pas atteinte -----------------------------------------------------------------------------------------------
         .catch(console.error);
 
 
-/* MODIFICATIONS RELATIVES AUX ETATS D'AUTHENTIFICATION LOGIN / LOGOUT de la page d'accueil--------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-/* RECUPERATION DU TOKEN d'identification présent dans le stockage local (dans le cas d'authentification réussie) dans une variable 'tokenValue' */        
+// ----------
+// ----------------------
+// ---------------------------------
+// ----------------------------------------------
+// MODIFICATIONS RELATIVES AUX ETATS D'AUTHENTIFICATION LOGIN / LOGOUT de la page d'accueil-----------------------------------------------------------
+
+
+
+// RECUPERATION DU TOKEN d'identification présent dans le stockage local (dans le cas d'authentification réussie) dans une variable 'tokenValue'------         
 let tokenValue = sessionStorage.getItem("1");
 
-/* CREATION DE DEUX FONCTIONS, l'une pour définir le mode logged IN de la page, l'autre pour le mode logged OUT */
-
-function loginVersion(loginLink,logoutButton, modifProfile, modifWork, filters){
+// CREATION DE DEUX FONCTIONS, l'une pour définir le mode logged IN de la page...---------------------------------------------------------------------
+function loginVersion(loginLink,logoutButton, modifProfile, modifWork, filters, topBlackNav){
     loginLink.style.display = "none";
     logoutButton.style.display = "block";
     modifProfile.style.display = "block";
     modifWork.style.display = "block";
     filters.style.display = "none";
+    topBlackNav.style.display = "flex"
 }
 
-function logoutVersion(loginLink,logoutButton, modifProfile, modifWork, filters){
+// L'autre pour le mode logged OUT -------------------------------------------------------------------------------------------------------------------
+function logoutVersion(loginLink,logoutButton, modifProfile, modifWork, filters,topBlackNav){
     loginLink.style.display = "block";
     logoutButton.style.display = "none";
     modifProfile.style.display = "none";
     modifWork.style.display = "none";
     filters.style.display = "flex";
+    topBlackNav.style.display = "none"
 }
 
-/* VERIFICATION DE L'ETAT AUTHENTIFICATION et APPLICATION DES MODIFS A EFFECTUER SUR L'AFFICHAGE DE LA PAGE D'INDEX, EN FONCTION-------------------
--------------------------------------------------------------------------------------------------------------------------------------------------*/
+// VERIFICATION DE L'ETAT AUTHENTIFICATION et APPLICATION DES MODIFS A EFFECTUER SUR L'AFFICHAGE DE LA PAGE D'INDEX, EN FONCTION----------------------
 
-document.addEventListener("DOMContentLoaded", function() { // on exécute cette partie de code dans une fonction permettant d'attendre que le DOM soit chargé
+document.addEventListener("DOMContentLoaded", function() { // execution du code dans une fonction permettant d'attendre que le DOM soit chargé--------
     
-    // ---- DEFINITION DES ELEMENTS de boutons logIn et logOut, boutons de modifications d'image de profil et des travaux, et liste de filtre */
+    // ---- DEFINITION DES ELEMENTS de boutons logIn et logOut, boutons de modifications d'image de profil et des travaux, et liste de filtre --------
     const loginLink = document.querySelector (".loginLink");
     const logoutButton = document.querySelector (".logoutButton");
     const modifProfile = document.querySelector (".modifProfile");
     const modifWork = document.querySelector (".modifWork");
     const filters = document.querySelector (".filters");
+    const topBlackNav = document.querySelector (".topBlackNav");
 
-    // ---- CREATION D'UN EVENEMENT sur le bouton logout puis exécution des modifications: effacement du token et fonction logOut*/
+    // ---- CREATION D'UN EVENEMENT sur le bouton logout puis exécution des modifications: effacement du token et appel fonction logOut --------------
     logoutButton.addEventListener("click", function() {
         window.sessionStorage.removeItem("1");
-        logoutVersion(loginLink,logoutButton, modifProfile, modifWork, filters);
+        logoutVersion(loginLink,logoutButton, modifProfile, modifWork, filters, topBlackNav);
         window.location.reload();
     })
     
-    // ---- CREATION DE LA FONCTION CHECKAUTH, permettant de vérifier si l'authentification est réussie ou non, 
-    //et d'appliquer les modifications du mode logIN ou logOUT avec une condition if/else 
+    // ---- CREATION DE LA FONCTION CHECKAUTH, permettant de vérifier si l'authentification est réussie ou non,  
     function checkAuth (tokenValue) {
+        // APPLICATION des modifications du mode logIN ou logOUT avec une condition if/else
         if (tokenValue) {
-            loginVersion(loginLink, logoutButton, modifProfile, modifWork, filters);
+            loginVersion(loginLink, logoutButton, modifProfile, modifWork, filters, topBlackNav);
         } else {
-            logoutVersion(loginLink, logoutButton, modifProfile, modifWork, filters);
+            logoutVersion(loginLink, logoutButton, modifProfile, modifWork, filters, topBlackNav);
         }
     }
 
-    // ---- EXECUTION DE LA FONCTION CHECKAUTH avec 'tokenValue' en paramètre 
+    // ---- EXECUTION DE LA FONCTION CHECKAUTH avec 'tokenValue' en paramètre -----------------------------------------------------------------------
     checkAuth (tokenValue);
 
-    // ---- OUVERTURE DE LA MODALE -------------------------------------------------------
 
+
+    // ----------
+    // ----------------------
+    // ---------------------------------
+    // ----------------------------------------------
+    // OUVERTURE, FERMETURE ET MANIPULATION DE LA MODALE -------------------------------------------------------------------------------------------
+
+
+
+    // Déclaration des éléments de la modale via le DOM --------------------------------------------------------------------------------------------
     const modalWork = document.getElementById ("modalWork");
     const closeButton = document.querySelector (".closeButton");
     const goBackButton = document.querySelector (".goBackButton");
     const modalGallery = document.querySelector (".modalGallery");
     const modalAdd = document.querySelector (".modalAdd");
 
+    // Création de la fonction d'ouverture de la modale --------------------------------------------------------------------------------------------
     const openWorkModal = function (event) {
         event.preventDefault();
         modalWork.style.display = 'flex';
         modalAdd.style.display = 'none';
         closeButton.addEventListener("click", closeWorkModal);
+        alertMessageUpload.innerText = "";
     }
-
+    
+    // Création de la fonction de fermeture de la modale -------------------------------------------------------------------------------------------
     const closeWorkModal = function (event) {
         goBackModal(event);
         modalWork.style.display = 'none';
+        alertMessageUpload.innerText = "";
     }
 
+    // Ajout écouteur d'évènement sur bouton "modifier" pour ouverture de la modale ----------------------------------------------------------------
     modifWork.addEventListener("click", openWorkModal);
-    
-    // ---- OUVERTURE DU MODE EDITION / AJOUT PHOTO 
 
+    // Passage en mode EDITION / AJOUT PHOTO -------------------------------------------------------------------------------------------------------
     const addPicButton = document.querySelector (".addPicButton");
     const openEditionMode = function (event) {
         event.preventDefault();
         modalGallery.style.display = 'none';
         modalAdd.style.display = null;
         goBackButton.style.display = 'block';
+        alertMessageUpload.innerText = "";
     }
+    // Ajout écouteur d'évènement sur bouton "ajouter" pour ouverture mode édition/ajout photo
     addPicButton.addEventListener("click", openEditionMode);
 
-    // ---- RETOUR EN ARRIERE VERS LE MODE SUPPR TRAVAUX 
-    
+    // Retour en arrière vers le mode SUPPRESSION TRAVAUX -------------------------------------------------------------------------------------------
     const goBackModal = function (event) {
         event.preventDefault();
         modalGallery.style.display = 'flex';
         modalAdd.style.display = 'none';
-        //ré-initialiser la modale d'ajouts:
-        reinitAddModal();
+        alertMessageUpload.innerText = "";
+        reinitAddModal(); //ré-initialiser la modale d'ajouts
     }
+    // Ajout écouteur d'évènement sur icône flèche pour revenir au mode "suppression travaux"
     goBackButton.addEventListener("click", goBackModal);
 
+    // Création d'un message d'alerte initialement vide ---------------------------------------------------------------------------------------------
+    const alertMessageUpload = document.createElement("p");
+    const categoryForm = document.querySelector(".categoryForm");
+    categoryForm.appendChild(alertMessageUpload);
 
 
 
+    // ----------
+    // ----------------------
+    // ---------------------------------
+    // ----------------------------------------------
+    // AJOUT D'UN NOUVEAU PROJET AVEC REQUETE POST et FORMDATA -------------------------------------------------------------------------------------------
 
 
 
-
-
-    // ---- AJOUT D'UN NOUVEAU PROJET AVEC REQUETE POST et FORMDATA 
-    
-
-
-
-
-
-
-    // ---- création d'une variable pour définir le formulaire d'ajout
+    // Définition d'une variable pour le formulaire d'ajout ----------------------------------------------------------------------------------------------
     const addWorkForm = document.querySelector(".addWorkForm");
 
-    // ---- création des éléments du DOM pour afficher le template image
+    // Création des éléments du DOM pour afficher le template image --------------------------------------------------------------------------------------
     const inputFiles = document.querySelector('#inputFiles');
     const inputTitle = document.querySelector('#title');
     const inputCategory = document.querySelector('#category');
@@ -160,58 +192,55 @@ document.addEventListener("DOMContentLoaded", function() { // on exécute cette 
 
     const picText = document.querySelector('.picText');
     const picIcon = document.querySelector('.picIcon');
-    const imgTemplate = document.createElement("img");
     const picInputButton = document.querySelector('.picInputButton');
+
+    const imgTemplate = document.createElement("img");
     picFieldContainer.appendChild(imgTemplate);
     imgTemplate.setAttribute("class", "imgTemplate");
 
-    // ---- AFFICHER UN TEMPLATE IMAGE DU PROJET
-    function displayTemplate(){
-        console.log("image uploadee");
 
+    // AFFICHAGE DU TEMPLATE IMAGE -----------------------------------------------------------------------------------------------------------------------
+    
+
+    // Création d'une fonction pour l'affichage du template image lors du chargement de l'image
+    function displayTemplate(){
+
+        // dissimulation du formulaire d'ajout d'image
         picIcon.style.display="none";
         picText.style.display="none";
         picInputButton.style.display="none";
-        imgTemplate.style.display="block";
 
-        const file = inputFiles.files[0];
-        const reader = new FileReader();
-        
-        reader.readAsDataURL(file);
-        
-        reader.onload = function() {
+        // création et définition des attributs du template pour affichage 
+        const file = inputFiles.files[0]; // récupération du fichier image dans le formulaire
+        const reader = new FileReader(); 
+        reader.readAsDataURL(file); // lecture du fichier image récupéré comme adresse url
+        reader.onload = function() { // création des attributs de l'image (src, alt, class)
             imgTemplate.setAttribute("src", reader.result);
             imgTemplate.setAttribute("alt", "");
             imgTemplate.setAttribute("class", "imgTemplate");
         }
+
+        // affichage du template image
+        imgTemplate.style.display="block";
     };
 
-    // ---- CREATION D'UNE FONCTION POUR REINITIALISER LA MODALE D'AJOUT ---
-    function reinitAddModal() {
-        picIcon.style.display= "block";
-        picText.style.display= "block";
-        picInputButton.style.display= "block";
-        imgTemplate.style.display ="none";
-        inputTitle.value="";
-    }
-
+    // Ajout d'un écouteur d'évènement sur le chargement de l'image pour affichage du template 
     inputFiles.addEventListener('change', displayTemplate);
+
+
+    // ENVOI DU FORMULAIRE -------------------------------------------------------------------------------------------------------------
     
-    // ---- création d'un écouteur d'évènement pour soumettre le formulaire 
-    addWorkForm.addEventListener('submit',formSubmit);
-
+    // Création d'une fonction asynchrone pour envoi du formulaire, via fetch en POST 
     async function formSubmit(event) {
-
         event.preventDefault();
         const workFormData = new FormData();
-
         workFormData.append('image', inputFiles.files[0]);
         workFormData.append('title', inputTitle.value);
         workFormData.append('category', inputCategory.value);
 
-      
-        // ---- Envoyer formData au backend pour le traitement, à condition que tous les champs soient remplis
+        alertMessageUpload.innerText = "";
 
+        // ENVOI formData au backend pour le traitement, à condition que tous les champs soient remplis
         fetch('http://localhost:5678/api/works', {
             method: 'POST',
             headers: {
@@ -219,12 +248,12 @@ document.addEventListener("DOMContentLoaded", function() { // on exécute cette 
             },
             body: workFormData
         })
-            //.then(response => {
             .then(response => response.json())
             .then(data => {
+                
                 if(data.id){
-                    
-                    // ---- A la place d'un reload de la page, création d'éléments dans le DOM pour afficher les images dans le portfolio
+        
+                    // Récupération de la réponse pour publication dynamique du projet uploadé, via la fonction generateSingleWork
                     console.log (data);
                     let figureId = `figure${data.id}`;
                     let templateId = `template${data.id}`;
@@ -234,26 +263,38 @@ document.addEventListener("DOMContentLoaded", function() { // on exécute cette 
 
                     generateSingleWork (figureId, templateId, imgSrc, imgTitle, workId);
 
-                    //revenir à la modale précédente: 
+                    // Puis retour à la modale précédente de grille et suppression des projets
                     event.preventDefault();
                     modalGallery.style.display = 'flex';
                     modalAdd.style.display = 'none';
 
-                    //ré-initialiser la modale d'ajouts:
+                    // Puis ré-initialisation de la modale d'ajouts(fonction créée plus bas)
                     reinitAddModal();
                     
                 } else {
-                    const alertMessageUpload = document.createElement("p");
-                    const categoryForm = document.querySelector(".categoryForm");
-                    categoryForm.appendChild(alertMessageUpload);
+
+                    // Affichage d'un message d'erreur, si tous les champs ne sont pas complétés 
                     alertMessageUpload.innerText = "tous les champs doivent être complétés!";
                     alertMessageUpload.setAttribute("class", "alertMessage");
-                    //ré-initialiser la modale d'ajouts:
+                    // Puis ré-initialisation de la modale d'ajouts (fonction créée plus bas)
                     reinitAddModal();
                 }
             })
+
             .catch(error => {
                 (console.error);
             });
-    }      
+    } 
+
+    // Création d'une fonction pour la réinitialisation de la modale d'ajout, lorsque le formulaire est envoyé
+    function reinitAddModal() {
+        picIcon.style.display= "block";
+        picText.style.display= "block";
+        picInputButton.style.display= "block";
+        imgTemplate.src ="";
+        inputTitle.value="";
+    }
+    
+    // Ajout d'un écouteur d'évènement sur le bouton "valider" pour envoi le formulaire
+    addWorkForm.addEventListener('submit',formSubmit);     
 })
