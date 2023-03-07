@@ -254,14 +254,14 @@ document.addEventListener("DOMContentLoaded", function() { // execution du code 
                 if(data.id){
         
                     // Récupération de la réponse pour publication dynamique du projet uploadé, via la fonction generateSingleWork
-                    console.log (data);
+                    console.log(data);
                     let figureId = `figure${data.id}`;
                     let templateId = `template${data.id}`;
                     let imgSrc = data.imageUrl;
                     let imgTitle = inputTitle.value;
                     let workId = data.id;
 
-                    generateSingleWork (figureId, templateId, imgSrc, imgTitle, workId);
+                    generateSingleWork(figureId, templateId, imgSrc, imgTitle, workId);
 
                     // Puis retour à la modale précédente de grille et suppression des projets
                     event.preventDefault();
