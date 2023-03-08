@@ -138,6 +138,7 @@ document.addEventListener("DOMContentLoaded", function() { // execution du code 
         goBackModal(event);
         modalWork.style.display = 'none';
         alertMessageUpload.innerText = "";
+        document.getElementById("inputFiles").value=""; // Puis ré-initialisation du champs d'upload de l'image
     }
 
     // Ajout écouteur d'évènement sur bouton "modifier" pour ouverture de la modale ----------------------------------------------------------------
@@ -162,6 +163,7 @@ document.addEventListener("DOMContentLoaded", function() { // execution du code 
         modalAdd.style.display = 'none';
         alertMessageUpload.innerText = "";
         reinitAddModal(); //ré-initialiser la modale d'ajouts
+        document.getElementById("inputFiles").value=""; // Puis ré-initialisation du champs d'upload de l'image
     }
     // Ajout écouteur d'évènement sur icône flèche pour revenir au mode "suppression travaux"
     goBackButton.addEventListener("click", goBackModal);
@@ -270,6 +272,9 @@ document.addEventListener("DOMContentLoaded", function() { // execution du code 
 
                     // Puis ré-initialisation de la modale d'ajouts(fonction créée plus bas)
                     reinitAddModal();
+
+                    // Puis ré-initialisation du champs d'upload de l'image
+                    document.getElementById("inputFiles").value="";
                     
                 } else {
 
