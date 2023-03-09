@@ -140,6 +140,7 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	cursor: pointer;
 }
 
 li:hover, li a:hover {
@@ -244,10 +245,12 @@ footer nav ul {
 
 .loginLink {
 	display: block;
+	cursor: pointer;
 }
 
 .logoutButton {
 	display: none;
+	cursor: pointer;
 }
 
 .modifProfile, .modifWork {
@@ -255,7 +258,7 @@ footer nav ul {
 	text-decoration: none;
     color: black;
 	font-size: 14px;
-	padding: 10px 0 0 57px;
+	margin: 10px 0 0 57px;
 }
 
 .modifIcon {
@@ -288,6 +291,7 @@ footer nav ul {
 	font-family: 'Syne';
 	border: solid 1px #1D6154;
 	border-radius: 24px;
+	cursor: pointer;
 }
 
 .filters li:hover {
@@ -307,6 +311,14 @@ li.allCategories:hover {
 	color: #1D6154;
 	background-color: white;
 	border: solid 1px #1D6154;
+}
+
+.noCategoryTxt {
+	display: block;
+    margin: 15% auto;
+    text-align: center;
+    font-size: 16px;
+    color: #B1663C;
 }
 
 /* AJOUT DES STYLES DE LA PAGE LOGIN ----------------------------------------------------------------------------------------
@@ -361,11 +373,13 @@ li.allCategories:hover {
 	font-family: 'Syne';
 	width: 179px;
     margin: 0 auto 30px auto;
+	cursor: pointer;
 }
 
 .forgottenPwButton {
 	text-decoration: underline;
 	margin: 0 auto 0 auto;
+	cursor: pointer;
 }
 
 .loginFooter {
@@ -379,14 +393,15 @@ li.allCategories:hover {
 .alertMessage {
 	color: red;
 	margin: 0 auto 37px auto;
+	transition: 1s;
 }
 
 
-/* AJOUT DES STYLES DE LA MODALE ---------------------------------------------------------------------------------------------
+/* AJOUT DES STYLES DE LA MODALE et CONFIRMBOX ---------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------*/
 
-.modalWork {
+.modalWork, .confirmBox {
 	position: fixed;
 	display: flex;
 	align-items: center;
@@ -405,6 +420,17 @@ li.allCategories:hover {
 	border-radius: 10px;
 }
 
+.confirmWrapper {
+	width: 400px;
+    height: 172px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 20%;
+}
+
 .modalGallery, .modalAdd {
 	display: flex;
 	flex-direction: column;
@@ -421,6 +447,16 @@ aside div h2 {
     color:black;
 }
 
+dialog p {
+	text-align: center;
+    display: block;
+    margin: 0 auto 0 auto;
+    font-family: 'Work Sans';
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+}
+
 .removeGalleryButton {
 	font-family: 'Syne';
 	font-size: 14px;
@@ -429,17 +465,49 @@ aside div h2 {
 	padding: 23px 0 48px 0;
 }
 
+.addPicButton, .cancelButton, .okButton {
+	border-radius: 24px;
+	font-size: 14px;
+	font-family: 'Syne';
+	height: 36px;
+	cursor: pointer;
+}
+
 .addPicButton {
-	margin: 0 auto 0 auto;
 	color: white;
 	border: 0px;
 	background-color: #1D6154;
 	border: solid 1px white;
-	border-radius: 24px;
-	font-size: 14px;
-	font-family: 'Syne';
+	margin: 0 auto 0 auto;
 	width: 237px;
-	height: 36px;
+}
+
+.okButton {
+	color: white;
+	border: 0px;
+	background-color: #1D6154;
+	border: solid 1px white;
+	margin: 0;
+	width: 95px;
+}
+
+.cancelButton {
+	color: #1D6154;
+	background-color: white;
+	border: solid 1px #1D6154;
+	margin: 0;
+	width: 95px;
+}
+
+
+.confirmButtons {
+	margin: 0 auto 0 auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	column-gap: 30px;
+	cursor: pointer;
+
 }
 
 .modalButtons {
@@ -455,6 +523,7 @@ aside div h2 {
 	bottom: 334px;
     left: 609px;
     font-size: 20px;
+	cursor: pointer;
 }
 
 .templatesContainer {
@@ -483,6 +552,7 @@ aside div h2 {
 	height: 17px;
 	background-color: black;
 	border-radius: 2px;
+	cursor: pointer;
 }
 
 .picFieldContainer {
@@ -517,6 +587,7 @@ aside div h2 {
 	font-family: 'Work Sans';
 	width: 237px;
 	height: 36px;
+	cursor: pointer;
 }
 
 #validateButton {
@@ -530,6 +601,7 @@ aside div h2 {
 	font-family: 'Syne';
 	width: 237px;
 	height: 36px;
+	cursor: pointer;
 }
 
 .addWorkForm {
