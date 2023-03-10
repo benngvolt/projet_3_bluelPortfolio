@@ -1,18 +1,15 @@
-// --
-// ----------
-// ----------------------
-// ---------------------------------
-// ----------------------------------------------
-// CREATION DU FORMULAIRE DE CONNEXION ---------------------
+// -----------------------------------
+// CREATION DU FORMULAIRE DE CONNEXION
+// -----------------------------------
 
 
-// ---- partie du formulaire relative à l'EMAIL ---------------------------------------------------------------------------------
+// DOM - Partie du formulaire relative à l'EMAIL
 const emailField = document.querySelector(".emailField");
 
-// ---- partie du formulaire relative au MOT DE PASSE ---------------------------------------------------------------------------
+// DOM - Partie du formulaire relative au MOT-DE-PASSE
 const passwordField = document.querySelector(".passwordField");
 
-// partie du formulaire relative aux BOUTONS (bouton d'envoi + oubli mot-de-passe) ----------------------------------------------
+// DOM - partie du formulaire relative aux BOUTONS (bouton d'envoi + oubli mot-de-passe)
 const buttonForm = document.querySelector(".buttonForm");
 const loginForm = document.querySelector(".loginForm");
 
@@ -21,23 +18,25 @@ const passwordForm = document.querySelector(".passwordForm");
 passwordForm.appendChild(alertMessage);
 alertMessage.setAttribute("class", "alertMessage");
 
-/* CREATION D'UN EVENEMENT D'ENVOI DU FORMULAIRE lié à l'élément 'submitButton', 
-et exécution d'une requête POST via l'API pour vérification identification------
-------------------------------------------------------------------------------*/
+
+//------------------------------------------------------------
+// CREATION D'UN ECOUTEUR D'EVENEMENT POUR ENVOI DU FORMULAIRE
+//------------------------------------------------------------
+
 
 loginForm.addEventListener("submit", async function(event){
 
-    // empêchement du navigateur de recharger la page par défault ---------------------------------------------------------------
+    // Empêchement du navigateur de recharger la page par défault
     event.preventDefault();
 
-    // réinitialisation du message d'alerte d'identifiants incorrects
+    // Réinitialisation du message d'alerte d'identifiants incorrects
     alertMessage.innerText = "";
 
-    // stockage des valeurs email et password entrées en input dans le champs de saisie, dans des variables email et password ---
+    // Stockage des valeurs 'email' et 'password' entrées en input dans le champs de saisie, dans des variables email et password
     let email = emailField.value;
     let password = passwordField.value;
 
-    // requête POST avec fonction asynchrone FETCH, puis méthode THEN pour traiter les promesses -------------------------------- 
+    // Requête POST avec fonction asynchrone FETCH, puis méthode THEN pour traiter les promesses
     
     fetch('http://localhost:5678/api/users/login',{
         method:"POST", 
