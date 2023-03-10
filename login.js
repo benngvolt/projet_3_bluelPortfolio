@@ -25,7 +25,7 @@ alertMessage.setAttribute("class", "alertMessage");
 et exécution d'une requête POST via l'API pour vérification identification------
 ------------------------------------------------------------------------------*/
 
-loginForm.addEventListener ("submit", async function(event){
+loginForm.addEventListener("submit", async function(event){
 
     // empêchement du navigateur de recharger la page par défault ---------------------------------------------------------------
     event.preventDefault();
@@ -46,7 +46,7 @@ loginForm.addEventListener ("submit", async function(event){
     })
         .then((response) => response.json())
 
-        // --- Vérification de la génération du token d'identification, en fonction de la réponse délivrée par l'API, selon la combinaison email/mot de passe entrée*/
+        // Vérification de la génération du token d'identification, en fonction de la réponse délivrée par l'API, selon la combinaison email/mot de passe entrée*/
         .then((data) => {
             if(data.token) {
                 console.log("autorisé");
@@ -55,8 +55,7 @@ loginForm.addEventListener ("submit", async function(event){
                 window.location.href = "index.html";
             } else {
                 // si authentification échouée, message d'alerte via une boîte de dialogue
-                alertMessage.innerText = "utilisateur / mot de passe incorrects";
-                
+                alertMessage.innerText = "utilisateur / mot de passe incorrects";     
         }
     })
         .catch((error) => console.error(error))
