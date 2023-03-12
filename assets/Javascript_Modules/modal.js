@@ -81,7 +81,7 @@ export function goBackModal(event) {
 // ---------------------------------
 
 
-export function closeWorkModal(event) {
+function closeWorkModal(event) {
     goBackModal(event);
     modalWork.style.display = 'none';
     alertMessageUpload.innerText = "";
@@ -187,7 +187,7 @@ export async function formSubmit(event) {
 // ------------------------------------------------
 
 
-export function reinitAddModal() {
+function reinitAddModal() {
     imgIcon.style.display= "block";
     imgText.style.display= "block";
     imgInputButton.style.display= "block";

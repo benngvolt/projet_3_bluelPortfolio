@@ -17,7 +17,7 @@ const topBlackNav = document.querySelector(".topBlackNav"); // DOM - définition
 // --------------
 
 
-export function loginVersion(loginLink,logoutButton, modifProfile, modifWork, filters, topBlackNav){
+function loginVersion(loginLink,logoutButton, modifProfile, modifWork, filters, topBlackNav){
     //affichage des éléments : barre de navigation noire / bouton logOut / boutons 'modifier'
     topBlackNav.style.display = "flex"
     logoutButton.style.display = "block";

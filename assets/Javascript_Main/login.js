@@ -50,7 +50,7 @@ loginForm.addEventListener("submit", async function(event){
             if(data.token) {
                 console.log("autorisé");
                 // si authentification réussie, stockage du token en session storage et redirection vers la page d'accueil en mode logged In (cf script.js)*/
-                window.sessionStorage.setItem(JSON.stringify(data.userId),JSON.stringify(data.token));
+                window.sessionStorage.setItem("1",JSON.stringify(data.token));
                 window.location.href = "index.html";
             } else {
                 // si authentification échouée, message d'alerte via une boîte de dialogue
