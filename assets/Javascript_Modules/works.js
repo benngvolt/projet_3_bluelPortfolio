@@ -47,7 +47,6 @@ export function generateSingleWork(figureId, sampleId, imgSrc, imgTitle, workId)
 
     const trashButton = document.createElement("button"); // DOM - création d'un bouton 'supprimer' par projet
     trashButton.setAttribute("class","trashButton");
-    trashButton.id = workId;
     sampleElement.appendChild(trashButton);
 
     const trashIcon = document.createElement("i"); // DOM - création de l'icône 'corbeille' du bouton 'supprimer'
@@ -64,13 +63,16 @@ export function generateSingleWork(figureId, sampleId, imgSrc, imgTitle, workId)
     // Création d'un écouteur d'évènement sur le bouton 'supprimer', afin d'afficher la confirmbox et valider ou non la suppression du projet
     
     trashButton.addEventListener("click", function(){
-
+        
+        trashButton.id = workId;
+        
         // Affichage de la confirmbox
         confirmBox.style.display="flex";
 
         //cration d'un écouteur d'évènement pour le bouton 'NON' pour revenir en arrière sans supprimer le projet, en dissimulant la confirmbox
         cancelButton.addEventListener('click', function(){
             confirmBox.style.display="none";
+            trashButton.id = "";
         })
 
         //création d'un écouteur d'évènement pour le bouton 'OUI' afin de supprimer le projet via une requête fetch en DELETE
